@@ -1,5 +1,5 @@
 import * as core from '@actions/core'
-import {buildProject} from './build-project'
+import { buildProject } from './build-project'
 import stringArgv from 'string-argv'
 
 async function run(): Promise<void> {
