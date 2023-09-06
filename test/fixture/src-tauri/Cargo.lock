@@ -75,7 +75,7 @@ dependencies = [
  "serde",
  "serde_json",
  "tauri",
- "tauri-build-action",
+ "tauri-build",
 ]
 
 [[package]]
@@ -2515,7 +2515,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "tauri-build-action"
+name = "tauri-build"
 version = "1.3.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "929b3bd1248afc07b63e33a6a53c3f82c32d0b0a5e216e4530e94c467e019389"
