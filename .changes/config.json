@@ -1,5 +1,5 @@
 {
-  "gitSiteUrl": "https://github.com/JonasKruckenberg/tauri-build-action/",
+  "gitSiteUrl": "https://github.com/zoy-l/tauri-build-action/",
   "pkgManagers": {
     "github action": {
       "version": true,

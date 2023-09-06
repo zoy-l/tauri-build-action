@@ -1,4 +1,6 @@
-# fork tauri-build-action
+# fork [tauri-build](https://github.com/JonasKruckenberg/tauri-build)
+
+# tauri-build-action
 
 Adds more format support for Windows
 
@@ -57,7 +59,7 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y libgtk-3-dev webkit2gtk-4.0 libappindicator3-dev librsvg2-dev patchelf
 
-      - uses: JonasKruckenberg/tauri-build-action@v1
+      - uses: zoy-l/tauri-build-action@v1
         id: tauri_build
 
     # You can now use the JSON array of artifacts under `steps.tauri_build.outputs.artifacts` to post-process/upload your bundles
@@ -110,7 +112,7 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y libgtk-3-dev webkit2gtk-4.0 libappindicator3-dev librsvg2-dev patchelf
 
-      - uses: JonasKruckenberg/tauri-build-action@v1
+      - uses: zoy-l/tauri-build-action@v1
         id: tauri_build
 
       # The `artifacts` output can now be used by a different action to upload the artifacts
@@ -200,7 +202,7 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y libgtk-3-dev webkit2gtk-4.0 libappindicator3-dev librsvg2-dev patchelf
 
-      - uses: JonasKruckenberg/tauri-build-action@v1.2.2
+      - uses: zoy-l/tauri-build-action@v1.2.2
         id: tauri_build
         with:
           target: ${{ matrix.platform.rust_target }}
@@ -261,4 +263,4 @@ permissions:
 
 ## License
 
-[MIT © Jonas Kruckenberg](./LICENSE)
+[MIT © Zoy-l](./LICENSE)

@@ -1,5 +1,5 @@
-import {run} from '@tauri-apps/cli'
-import {basename, dirname, join, resolve} from 'path'
+import { run } from '@tauri-apps/cli'
+import { basename, dirname, join, resolve } from 'path'
 import glob from 'tiny-glob'
 import * as core from '@actions/core'
 import {
@@ -53,7 +53,7 @@ export async function buildProject(options: BuildOptions): Promise<string[]> {
   const metaRaw = await execCmd(
     'cargo',
     ['metadata', '--no-deps', '--format-version', '1'],
-    {cwd: crateDir}
+    { cwd: crateDir }
   )
   const meta = JSON.parse(metaRaw)
   const targetDir = meta.target_directory
@@ -70,7 +70,15 @@ export async function buildProject(options: BuildOptions): Promise<string[]> {
     'AppImage.tar.gz.sig',
     'deb'
   ]
-  const windowsExts = ['msi', 'msi.zip', 'msi.zip.sig']
+  const windowsExts = [
+    'msi',
+    'msi.zip',
+    'msi.zip.sig',
+    'exe',
+    'nsis',
+    'nsis.zip',
+    'nsis.zip.sig'
+  ]
 
   const artifactsLookupPattern = `${bundleDir}/*/!(linuxdeploy)*.{${[
     ...macOSExts,
@@ -146,7 +154,7 @@ async function execCmd(
   return new Promise((resolve, reject) => {
     exec(
       `${cmd} ${args.join(' ')}`,
-      {...options, encoding: 'utf-8'},
+      { ...options, encoding: 'utf-8' },
       (error, stdout, stderr) => {
         if (error) {
           console.error(
