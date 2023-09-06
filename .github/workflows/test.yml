@@ -66,8 +66,6 @@ jobs:
 
       - uses: zoy-l/tauri-build-action@main
         id: tauri_build
-        env:
-          ACTIONS_STEP_DEBUG: true
         with:
           target: ${{ matrix.platform.rust_target }}
           projectPath: ./test/fixture

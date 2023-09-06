@@ -11,6 +11,9 @@ dependencies:
   '@tauri-apps/cli':
     specifier: 1.4.0
     version: 1.4.0
+  '@tauri-apps/cli-darwin-arm64':
+    specifier: 1.4.0
+    version: 1.4.0
   '@tauri-apps/cli-darwin-x64':
     specifier: 1.4.0
     version: 1.4.0
@@ -181,7 +184,6 @@ packages:
     os: [darwin]
     requiresBuild: true
     dev: false
-    optional: true
 
   /@tauri-apps/cli-darwin-x64@1.4.0:
     resolution: {integrity: sha512-ov/F6Zr+dg9B0PtRu65stFo2G0ow2TUlneqYYrkj+vA3n+moWDHfVty0raDjMLQbQt3rv3uayFMXGPMgble9OA==}
