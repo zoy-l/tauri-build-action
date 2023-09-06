@@ -1,19 +1,27 @@
-name: 'The name of your action here'
-description: 'Provide a description here'
-author: 'Your name or organization here'
-
-# Define your inputs here.
+name: 'tauri-build-action'
+description: 'Build tauri binaries for MacOS, Windows and Linux'
+icon: 'box'
+color: 'blue'
+author: 'Tauri Programme within The Commons Conservancy'
 inputs:
-  milliseconds:
-    description: 'Your input description here'
-    required: true
-    default: '1000'
-
-# Define your outputs here.
+  runner:
+    description: 'Binary to use to build the application'
+  args:
+    description: 'Additional arguments for the build command'
+  projectPath:
+    description: 'Path to the root of the project'
+  configPath:
+    description:
+      'Path to the tauri.conf.json file if you want a configuration different
+      from the default one'
+  target:
+    description: 'The target triple to build against'
+  debug:
+    description: 'Builds with the debug flag'
+    default: false
 outputs:
-  time:
-    description: 'Your output description here'
-
+  artifacts:
+    description: 'JSON array of artifact paths produced by the build command'
 runs:
-  using: node16
-  main: dist/index.js
+  using: 'node16'
+  main: 'dist/index.js'

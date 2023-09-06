@@ -1,202 +1,264 @@
-# Create a JavaScript Action Using TypeScript
+# fork tauri-build-action
 
-[![GitHub Super-Linter](https://github.com/actions/typescript-action/actions/workflows/linter.yml/badge.svg)](https://github.com/super-linter/super-linter)
-![CI](https://github.com/actions/typescript-action/actions/workflows/ci.yml/badge.svg)
-
-Use this template to bootstrap the creation of a TypeScript action. :rocket:
-
-This template includes compilation support, tests, a validation workflow,
-publishing, and versioning guidance.
-
-If you are new, there's also a simpler introduction in the
-[Hello world JavaScript action repository](https://github.com/actions/hello-world-javascript-action).
-
-## Create Your Own Action
-
-To create your own action, you can use this repository as a template! Just
-follow the below instructions:
-
-1. Click the **Use this template** button at the top of the repository
-1. Select **Create a new repository**
-1. Select an owner and name for your new repository
-1. Click **Create repository**
-1. Clone your new repository
-
-## Initial Setup
-
-After you've cloned the repository to your local machine or codespace, you'll
-need to perform some initial setup steps before you can develop your action.
-
-> [!NOTE]
->
-> You'll need to have a reasonably modern version of
-> [Node.js](https://nodejs.org) handy. If you are using a version manager like
-> [`nodenv`](https://github.com/nodenv/nodenv) or
-> [`nvm`](https://github.com/nvm-sh/nvm), you can run `nodenv install` in the
-> root of your repository to install the version specified in
-> [`package.json`](./package.json). Otherwise, 16.x or later should work!
-
-1. :hammer_and_wrench: Install the dependencies
-
-   ```bash
-   npm install
-   ```
-
-1. :building_construction: Package the TypeScript for distribution
-
-   ```bash
-   npm run bundle
-   ```
-
-1. :white_check_mark: Run the tests
-
-   ```bash
-   $ npm test
-
-   PASS  ./index.test.js
-     ✓ throws invalid number (3ms)
-     ✓ wait 500 ms (504ms)
-     ✓ test runs (95ms)
-
-   ...
-   ```
-
-## Update the Action Metadata
-
-The [`action.yml`](action.yml) file defines metadata about your action, such as
-input(s) and output(s). For details about this file, see
-[Metadata syntax for GitHub Actions](https://docs.github.com/en/actions/creating-actions/metadata-syntax-for-github-actions).
-
-When you copy this repository, update `action.yml` with the name, description,
-inputs, and outputs for your action.
-
-## Update the Action Code
-
-The [`src/`](./src/) directory is the heart of your action! This contains the
-source code that will be run when your action is invoked. You can replace the
-contents of this directory with your own code.
-
-There are a few things to keep in mind when writing your action code:
-
-- Most GitHub Actions toolkit and CI/CD operations are processed asynchronously.
-  In `index.ts`, you will see that the action is run in an `async` function.
-
-  ```javascript
-  import * as core from '@actions/core';
-  ...
-
-  async function run() {
-    try {
-        ...
-    }
-    catch (error) {
-      core.setFailed(error.message);
-    }
-  }
-
-  run()
-  ```
-
-  For more information about the GitHub Actions toolkit, see the
-  [documentation](https://github.com/actions/toolkit/blob/master/README.md).
-
-So, what are you waiting for? Go ahead and start customizing your action!
-
-1. Create a new branch
-
-   ```bash
-   git checkout -b releases/v1
-   ```
-
-1. Replace the contents of `src/` with your action code
-1. Add tests to `__tests__/` for your source code
-1. Format, test, and build the action
-
-   ```bash
-   npm run all
-   ```
-
-   > [!WARNING]
-   >
-   > This step is important! It will run [`ncc`](https://github.com/vercel/ncc)
-   > to build the final JavaScript action code with all dependencies included.
-   > If you do not run this step, your action will not work correctly when it is
-   > used in a workflow. This step also includes the `--license` option for
-   > `ncc`, which will create a license file for all of the production node
-   > modules used in your project.
-
-1. Commit your changes
-
-   ```bash
-   git add .
-   git commit -m "My first action is ready!"
-   ```
-
-1. Push them to your repository
-
-   ```bash
-   git push -u origin releases/v1
-   ```
-
-1. Create a pull request and get feedback on your action
-1. Merge the pull request into the `main` branch
-
-Your action is now published! :rocket:
-
-For information about versioning your action, see
-[Versioning](https://github.com/actions/toolkit/blob/master/docs/action-versioning.md)
-in the GitHub Actions toolkit.
-
-## Validate the Action
-
-You can now validate the action by referencing it in a workflow file. For
-example, [`ci.yml`](./.github/workflows/ci.yml) demonstrates how to reference an
-action in the same repository.
-
-```yaml
-steps:
-  - name: Checkout
-    id: checkout
-    uses: actions/checkout@v3
-
-  - name: Test Local Action
-    id: test-action
-    uses: ./
-    with:
-      milliseconds: 1000
-
-  - name: Print Output
-    id: output
-    run: echo "${{ steps.test-action.outputs.time }}"
-```
-
-For example workflow runs, check out the
-[Actions tab](https://github.com/actions/typescript-action/actions)! :rocket:
+Adds more format support for Windows
 
 ## Usage
 
-After testing, you can create version tag(s) that developers can use to
-reference different stable versions of your action. For more information, see
-[Versioning](https://github.com/actions/toolkit/blob/master/docs/action-versioning.md)
-in the GitHub Actions toolkit.
+As opposed to the offical
+[tauri-action](https://github.com/tauri-apps/tauri-action) this action is as
+minimal as possible. Instead of creating a GitHub release and uploading
+artifacts all-in-one, it provides outputs to conveniently compose together with
+other actions such as `actions/upload-artifact`, `actions/download-artifact` or
+`softprops/action-gh-release`.
 
-To include the action in a workflow in another repository, you can use the
-`uses` syntax with the `@` symbol to reference a specific branch, tag, or commit
-hash.
+This action needs both Node.JS and Cargo to be already setup.
+
+### Minimal
+
+The following example workflow builds artifacts on all 3 supported platforms
+(Window, macOS and Linux).
 
 ```yaml
-steps:
-  - name: Checkout
-    id: checkout
-    uses: actions/checkout@v3
+name: 'publish'
 
-  - name: Test Local Action
-    id: test-action
-    uses: actions/typescript-action@v1 # Commit with the `v1` tag
-    with:
-      milliseconds: 1000
+on:
+  push:
+    branches:
+      - release
 
-  - name: Print Output
-    id: output
-    run: echo "${{ steps.test-action.outputs.time }}"
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-binaries:
+    strategy:
+      fail-fast: false
+      matrix:
+        platform: [macos-latest, ubuntu-latest, windows-latest]
+
+    runs-on: ${{ matrix.platform }}
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: setup node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 16
+
+      - name: install Rust stable
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+
+      - name: install dependencies (ubuntu only)
+        if: matrix.platform == 'ubuntu-latest'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libgtk-3-dev webkit2gtk-4.0 libappindicator3-dev librsvg2-dev patchelf
+
+      - uses: JonasKruckenberg/tauri-build-action@v1
+        id: tauri_build
+
+    # You can now use the JSON array of artifacts under `steps.tauri_build.outputs.artifacts` to post-process/upload your bundles
 ```
+
+### Bundling the app and creating a release
+
+Chances are you want to do _something_ with the artifacts that you produced. The
+following action will produce artifacts for Windows, macOS and Linux upload them
+as workflow artifacts, so that a final job (called `publish`) can create a
+GitHub release and attach all prouced artifacts to it. This would also be the
+place where you could upload artifacts to an AWS Bucket or similar.
+
+```yaml
+name: 'publish'
+
+on:
+  push:
+    branches:
+      - release
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-binaries:
+    strategy:
+      fail-fast: false
+      matrix:
+        platform: [macos-latest, ubuntu-latest, windows-latest]
+
+    runs-on: ${{ matrix.platform }}
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: setup node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 16
+
+      - name: install Rust stable
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+
+      - name: install dependencies (ubuntu only)
+        if: matrix.platform == 'ubuntu-latest'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libgtk-3-dev webkit2gtk-4.0 libappindicator3-dev librsvg2-dev patchelf
+
+      - uses: JonasKruckenberg/tauri-build-action@v1
+        id: tauri_build
+
+      # The `artifacts` output can now be used by a different action to upload the artifacts
+      - uses: actions/upload-artifact@v3
+        with:
+          name: artifacts
+          path:
+            "${{ join(fromJSON(steps.tauri_build.outputs.artifacts), '\n') }}"
+
+  publish:
+    needs: build-binaries
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      # Download the previously uploaded artifacts
+      - uses: actions/download-artifact@v3
+        id: download
+        with:
+          name: artifacts
+          path: artifacts
+      # And create a release with the artifacts attached
+      - name: 'create release'
+        uses: softprops/action-gh-release@master
+        env:
+          GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
+        with:
+          draft: false
+          files: ./artifacts/**/*
+```
+
+### Building for Apple Silicon
+
+This example workflow will run produce binaries for Apple Silicon (aarch64) as
+well as the previously shown 3 platforms. This leverages the build matrix. This
+can be expanded to produce binaries for other target combinations too.
+
+```yaml
+name: 'publish'
+
+on:
+  push:
+    branches:
+      - release
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-binaries:
+    strategy:
+      fail-fast: false
+      matrix:
+        platform:
+          - os: ubuntu-latest
+            rust_target: x86_64-unknown-linux-gnu
+          - os: macos-latest
+            rust_target: x86_64-apple-darwin
+          - os: macos-latest
+            rust_target: aarch64-apple-darwin
+          - os: windows-latest
+            rust_target: x86_64-pc-windows-msvc
+
+    runs-on: ${{ matrix.platform.os }}
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: 'Setup Rust'
+        uses: actions-rs/toolchain@v1
+        with:
+          default: true
+          override: true
+          profile: minimal
+          toolchain: stable
+          target: ${{ matrix.platform.rust_target }}
+
+      - uses: Swatinem/rust-cache@v2
+
+      - name: install dependencies (ubuntu only)
+        if: matrix.platform.os == 'ubuntu-latest'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libgtk-3-dev webkit2gtk-4.0 libappindicator3-dev librsvg2-dev patchelf
+
+      - uses: JonasKruckenberg/tauri-build-action@v1.2.2
+        id: tauri_build
+        with:
+          target: ${{ matrix.platform.rust_target }}
+
+      # The artifacts output can now be used to upload the artifacts
+      - uses: actions/upload-artifact@v3
+        with:
+          name: artifacts
+          path:
+            "${{ join(fromJSON(steps.tauri_build.outputs.artifacts), '\n') }}"
+
+  publish:
+    needs: build-binaries
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      # Download the previously uploaded artifacts
+      - uses: actions/download-artifact@v3
+        id: download
+        with:
+          name: artifacts
+          path: artifacts
+      # And create a release with the artifacts attached
+      - name: 'create release'
+        uses: softprops/action-gh-release@master
+        env:
+          GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
+        with:
+          draft: false
+          files: ./artifacts/**/*
+```
+
+## Inputs
+
+| Name          | Type    | Description                                                 | Default           |
+| ------------- | ------- | ----------------------------------------------------------- | ----------------- |
+| `runner`      | String  | Binary to use to build the application                      |                   |
+| `args`        | String  | Additional arguments for the build command                  |                   |
+| `projectPath` | String  | Path to the root of the Tauri project                       | .                 |
+| `configPath`  | String  | Path to the tauri.conf.json file, relative to `projectPath` | `tauri.conf.json` |
+| `target`      | String  | Rust target triple to build against                         |                   |
+| `debug`       | Boolean | Wether to build _debug_ or _release_ binaries               | false             |
+
+## Outputs
+
+| Name        | Type   | Description                                                |
+| ----------- | ------ | ---------------------------------------------------------- |
+| `artifacts` | String | JSON array of artifact paths produced by the build command |
+
+## Permissions
+
+This Action requires the following permissions on the GitHub integration token:
+
+```yaml
+permissions:
+  contents: write
+```
+
+## License
+
+[MIT © Jonas Kruckenberg](./LICENSE)

@@ -1,0 +1,26 @@
+{
+  "gitSiteUrl": "https://github.com/JonasKruckenberg/tauri-build-action/",
+  "pkgManagers": {
+    "github action": {
+      "version": true,
+      "preversion": [
+        "pnpm install --no-optional",
+        "pnpm build",
+        "pnpm package"
+      ],
+      "getPublishedVersion": "git describe --tags --abbrev=0",
+      "publish": [
+        "git tag v${ pkgFile.versionMajor } -f",
+        "git tag v${ pkgFile.versionMajor }.${ pkgFile.versionMinor } -f",
+        "git tag v${ pkgFile.version } -f",
+        "git push --tags -f"
+      ]
+    }
+  },
+  "packages": {
+    "tauri-build-action": {
+      "path": ".",
+      "manager": "github action"
+    }
+  }
+}
