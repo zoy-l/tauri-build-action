@@ -86,6 +86,7 @@ export async function buildProject(options: BuildOptions): Promise<string[]> {
     windowsExts
   ].join(',')}}`
 
+  console.log(artifactsLookupPattern)
   core.debug(
     `Looking for artifacts using this pattern: ${artifactsLookupPattern}`
   )

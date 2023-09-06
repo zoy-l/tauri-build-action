@@ -51,7 +51,9 @@
       "csp": null
     },
     "updater": {
-      "active": false
+      "active": false,
+      "endpoints": ["install.json"],
+      "pubkey": "abc"
     },
     "windows": [
       {
