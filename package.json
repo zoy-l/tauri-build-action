@@ -23,7 +23,7 @@
   "author": "zoy-l",
   "license": "MIT",
   "dependencies": {
-    "@actions/core": "^1.9.1",
+    "@actions/core": "^1.10.0",
     "@tauri-apps/cli": "1.4.0",
     "@tauri-apps/cli-darwin-arm64": "1.4.0",
     "@tauri-apps/cli-darwin-x64": "1.4.0",
