@@ -52,7 +52,7 @@ jobs:
             ${{ runner.os }}-pnpm-store-
 
       - name: covector version or publish (publish when no change files present)
-        uses: jbolda/covector/packages/action@covector-v0.10.1
+        uses: jbolda/covector/packages/action@covector-v0.10.2
         id: covector
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
