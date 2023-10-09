@@ -18,8 +18,8 @@ dependencies:
     specifier: 1.4.0
     version: 1.4.0
   '@tauri-apps/cli-linux-x64-gnu':
-    specifier: 1.4.0
-    version: 1.4.0
+    specifier: 1.5.2
+    version: 1.5.2
   '@tauri-apps/cli-win32-x64-msvc':
     specifier: 1.4.0
     version: 1.4.0
@@ -221,6 +221,15 @@ packages:
 
   /@tauri-apps/cli-linux-x64-gnu@1.4.0:
     resolution: {integrity: sha512-Zh5gfAJxOv5AVWxcwuueaQ2vIAhlg0d6nZui6nMyfIJ8dbf3aZQ5ZzP38sYow5h/fbvgL+3GSQxZRBIa3c2E1w==}
+    engines: {node: '>= 10'}
+    cpu: [x64]
+    os: [linux]
+    requiresBuild: true
+    dev: false
+    optional: true
+
+  /@tauri-apps/cli-linux-x64-gnu@1.5.2:
+    resolution: {integrity: sha512-/kEZrDVZv1+qYpZigtLntX4s+gx7WQqp8cmxKZL5GrzAjUNSTnfWK5VL7o0lYm09QBJAdTvjcJu2aPzNHLDS+Q==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [linux]
