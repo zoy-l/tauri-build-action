@@ -21,8 +21,8 @@ dependencies:
     specifier: 1.5.2
     version: 1.5.2
   '@tauri-apps/cli-win32-x64-msvc':
-    specifier: 1.4.0
-    version: 1.4.0
+    specifier: 1.5.2
+    version: 1.5.2
   string-argv:
     specifier: ^0.3.2
     version: 0.3.2
@@ -291,6 +291,15 @@ packages:
 
   /@tauri-apps/cli-win32-x64-msvc@1.4.0:
     resolution: {integrity: sha512-z8Olcnwp5aYhzqUAarFjqF+oELCjuYWnB2HAJHlfsYNfDCAORY5kct3Fklz8PSsubC3U2EugWn8n42DwnThurg==}
+    engines: {node: '>= 10'}
+    cpu: [x64]
+    os: [win32]
+    requiresBuild: true
+    dev: false
+    optional: true
+
+  /@tauri-apps/cli-win32-x64-msvc@1.5.2:
+    resolution: {integrity: sha512-HrOwIujKTql8yUOvR+IEGW/SXwMwPrGWrcM35cDfCxpkLH6h3F5i4JtRqYTAiFdSfTk1J2rcFVQXfFJYIDntnA==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [win32]
